@@ -3,155 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hotel Management System</title>
+  <title>Grand Palace Hotel | Management System</title>
   <style>
     :root {
-      --primary: #2d2d8a;
-      --success: #27ae60;
-      --danger: #e74c3c;
-      --warning: #f39c12;
-      --light: #ecf0f1;
-      --dark: #2c3e50;
+      --primary: #6366f1;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --gray: #6b7280;
+      --light: #f8fafc;
     }
-    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
-    body { background:#f4f6f9; color:#333; }
-    header {
-      background:var(--primary);
-      color:white;
-      padding:1.5rem;
-      text-align:center;
-      box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    }
-    nav {
-      background:#fff;
-      padding:1rem;
-      box-shadow:0 2px 5px rgba(0,0,0,0.1);
-      position:sticky;
-      top:0;
-      z-index:100;
-    }
-    nav ul {
-      list-style:none;
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:1rem;
-    }
-    nav a {
-      color:var(--primary);
-      text-decoration:none;
-      padding:0.6rem 1.2rem;
-      border-radius:5px;
-      transition:0.3s;
-      font-weight:600;
-    }
-    nav a:hover, nav a.active {
-      background:var(--primary);
-      color:white;
-    }
-    .container {
-      max-width:1200px;
-      margin:2rem auto;
-      padding:0 1rem;
-    }
-    .grid {
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap:1.5rem;
-      margin:2rem 0;
-    }
-    .card {
-      background:white;
-      padding:1.8rem;
-      border-radius:10px;
-      box-shadow:0 4px 15px rgba(0,0,0,0.1);
-      text-align:center;
-    }
-    .card h3 { margin-bottom:1rem; color:var(--primary); }
-    .card h1 { font-size:3rem; }
-    .btn {
-      padding:0.6rem 1.2rem;
-      border:none;
-      border-radius:5px;
-      cursor:pointer;
-      font-weight:bold;
-      transition:0.3s;
-      margin:0.3rem;
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; background:var(--light); color:#1e293b; line-height:1.6; }
+    header { background:var(--primary); color:white; text-align:center; padding:1.5rem; font-size:1.5rem; }
+    nav { background:white; box-shadow:0 4px 6px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; }
+    nav ul { display:flex; flex-wrap:wrap; justify-content:center; list-style:none; }
+    nav a { padding:1rem 1.5rem; color:var(--primary); text-decoration:none; font-weight:600; display:block; }
+    nav a:hover, nav a.active { background:var(--primary); color:white; }
+    .container { max-width:1400px; margin:2rem auto; padding:0 1rem; }
+    h2 { margin:2rem 0 1rem; color:var(--primary); text-align:center; }
+
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:1.5rem; margin:2rem 0; }
+    .card { background:white; padding:2rem; border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,0.1); text-align:center; transition:0.3s; }
+    .card:hover { transform:translateY(-8px); }
+    .card h3 { color:var(--gray); font-weight:500; margin-bottom:1rem; }
+    .card h1 { font-size:3.5rem; color:var(--primary); }
+
+    .btn { 
+      padding:0.8rem 1.6rem; border:none; border-radius:12px; cursor:pointer; 
+      font-weight:bold; font-size:1rem; transition:0.3s; margin:0.5rem;
     }
     .btn-primary { background:var(--primary); color:white; }
     .btn-success { background:var(--success); color:white; }
     .btn-danger { background:var(--danger); color:white; }
-    .btn-warning { background:var(--warning); color:white; }
-    .btn-sm { padding:0.4rem 0.8rem; font-size:0.85rem; }
-    .btn:hover { opacity:0.9; transform:translateY(-2px); }
-    table {
-      width:100%;
-      border-collapse:collapse;
-      margin:1.5rem 0;
-    }
-    th, td {
-      padding:1rem;
-      text-align:left;
-      border-bottom:1px solid #ddd;
-    }
-    th { background:#f8f9fa; font-weight:600; }
-    tr:hover { background:#f9f9f9; }
-    .status {
-      padding:0.4rem 0.9rem;
-      border-radius:20px;
-      font-size:0.85rem;
-      font-weight:bold;
-    }
-    .status-available { background:#d5f5e3; color:#27ae60; }
-    .status-occupied { background:#fadbd8; color:#e74c3c; }
-    .status-cleaning { background:#fef9e1; color:#f39c12; }
-    .status-confirmed { background:#d6eaf8; color:#2980b9; }
-    .status-checked-in { background:#fadbd8; color:#e74c3c; }
-    .status-checked-out { background:#eafaf1; color:#27ae60; }
-    .form-group {
-      margin-bottom:1.2rem;
-    }
-    label {
-      display:block;
-      margin-bottom:0.5rem;
-      font-weight:600;
-    }
-    input, select {
-      width:100%;
-      padding:0.7rem;
-      border:1px solid #ddd;
-      border-radius:5px;
-      font-size:1rem;
-    }
-    .hidden { display:none; }
+    .btn-outline { background:transparent; border:2px solid var(--primary); color:var(--primary); }
+    .btn:hover { opacity:0.9; transform:scale(1.05); }
+
+    table { width:100%; border-collapse:collapse; background:white; border-radius:12px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.08); }
+    th { background:var(--primary); color:white; padding:1rem; text-align:left; }
+    td { padding:1rem; border-bottom:1px solid #eee; }
+    tr:hover { background:#f1f5f9; }
+
     .modal {
-      position:fixed;
-      top:0; left:0; right:0; bottom:0;
-      background:rgba(0,0,0,0.6);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:1000;
+      position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7);
+      display:flex; align-items:center; justify-content:center; z-index:1000; padding:1rem;
     }
     .modal-content {
-      background:white;
-      padding:2rem;
-      border-radius:10px;
-      width:90%;
-      max-width:500px;
-      max-height:90vh;
-      overflow-y:auto;
+      background:white; width:100%; max-width:550px; border-radius:16px; padding:2rem; max-height:95vh; overflow-y:auto;
     }
+    .form-group { margin-bottom:1.2rem; }
+    label { display:block; margin-bottom:0.5rem; font-weight:600; color:#374151; }
+    input, select { width:100%; padding:0.9rem; border:1px solid #cbd5e1; border-radius:12px; font-size:1rem; }
+    .hidden { display:none !important; }
+
+    .quick-actions { text-align:center; margin:2rem 0; }
+    .quick-actions .btn { font-size:1.2rem; padding:1rem 2rem; }
+
     @media (max-width: 768px) {
-      .grid { grid-template-columns:1fr; }
-      nav ul { flex-direction:column; }
+      header { font-size:1.3rem; padding:1rem; }
+      nav a { padding:0.8rem 1rem; font-size:0.95rem; }
+      .card h1 { font-size:2.8rem; }
+      .modal-content { padding:1.5rem; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>🏨 Grand Palace Hotel - Management System</h1>
+  <h1>Grand Palace Hotel - Management System</h1>
 </header>
 
 <nav>
@@ -159,7 +78,7 @@
     <li><a href="#" class="active" data-page="dashboard">Dashboard</a></li>
     <li><a href="#" data-page="rooms">Rooms</a></li>
     <li><a href="#" data-page="bookings">Bookings</a></li>
-    <li><a href="#" data-page="guests">Guests</a></li>
+    <li><a href="#" data-page="guests">Current Guests</a></li>
   </ul>
 </nav>
 
@@ -167,398 +86,269 @@
 
   <!-- Dashboard -->
   <div id="dashboard">
-    <h2>Dashboard Overview</h2>
+    <h2>Welcome Back, Manager!</h2>
     <div class="grid">
-      <div class="card">
-        <h3>Total Rooms</h3>
-        <h1 id="totalRooms">0</h1>
-      </div>
-      <div class="card">
-        <h3>Available</h3>
-        <h1 id="availableRooms" style="color:var(--success)">0</h1>
-      </div>
-      <div class="card">
-        <h3>Occupied</h3>
-        <h1 id="occupiedRooms" style="color:var(--danger)">0</h1>
-      </div>
-      <div class="card">
-        <h3>Today's Check-ins</h3>
-        <h1 id="todayBookings">0</h1>
-      </div>
+      <div class="card"><h3>Total Rooms</h3><h1 id="totalRooms">0</h1></div>
+      <div class="card"><h3>Available Now</h3><h1 id="availableRooms" style="color:var(--success)">0</h1></div>
+      <div class="card"><h3>Occupied</h3><h1 id="occupiedRooms" style="color:var(--danger)">0</h1></div>
+      <div class="card"><h3>Today's Arrivals</h3><h1 id="todayBookings">0</h1></div>
+    </div>
+
+    <div class="quick-actions">
+      <button class="btn btn-success" onclick="openBookingModal()">+ New Booking</button>
+      <button class="btn btn-primary" onclick="openWalkInModal()">Guest Walk-in (Instant)</button>
     </div>
   </div>
 
   <!-- Rooms -->
   <div id="rooms" class="hidden">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap;">
-      <h2>Room Management</h2>
+    <div style="text-align:right; margin-bottom:1rem;">
       <button class="btn btn-primary" onclick="openRoomModal()">+ Add New Room</button>
     </div>
-    <div class="card">
-      <table id="roomsTable">
-        <thead>
-          <tr>
-            <th>Room No</th>
-            <th>Type</th>
-            <th>Price/Night</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <table id="roomsTable">
+      <thead><tr><th>Room No</th><th>Type</th><th>Price/Night</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
   </div>
 
   <!-- Bookings -->
   <div id="bookings" class="hidden">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:1rem;">
-      <h2>Bookings</h2>
-      <div>
-        <input type="text" id="searchBooking" placeholder="🔍 Search by guest or room..." style="padding:0.7rem; width:250px; max-width:100%;">
-        <button class="btn btn-success" onclick="openBookingModal()">+ New Booking</button>
-      </div>
+    <div style="text-align:right; margin-bottom:1rem;">
+      <button class="btn btn-success" onclick="openBookingModal()">+ New Booking</button>
     </div>
-    <div class="card">
-      <table id="bookingsTable">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Guest</th>
-            <th>Room</th>
-            <th>Check In</th>
-            <th>Check Out</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <table id="bookingsTable">
+      <thead><tr><th>ID</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody></tbody>
+    </table>
   </div>
 
-  <!-- Guests -->
+  <!-- Current Guests - FIXED! -->
   <div id="guests" class="hidden">
-    <h2>Current Guests (Checked In)</h2>
-    <div class="card">
-      <table id="guestsTable">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Room</th>
-            <th>Check In</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <h2>Guests Currently Staying</h2>
+    <table id="guestsTable">
+      <thead><tr><th>Guest Name</th><th>Phone</th><th>Email</th><th>Room</th><th>Check-in Date</th></tr></thead>
+      <tbody></tbody>
+    </table>
   </div>
-
 </div>
 
-<!-- Room Modal -->
-<div id="roomModal" class="modal hidden">
+<!-- Modals (Room, Booking, Walk-in) -->
+<div id="roomModal" class="modal hidden" onclick="if(event.target===this) closeModal('roomModal')">
   <div class="modal-content">
-    <h3 id="roomModalTitle">Add New Room</h3>
+    <h3 id="roomTitle">Add New Room</h3>
     <form id="roomForm">
       <input type="hidden" id="roomId">
-      <div class="form-group">
-        <
-
-      <label>Room Number</label>
-        <input type="text" id="roomNumber" required placeholder="e.g. 101">
-      </div>
-      <div class="form-group">
-        <label>Room Type</label>
+      <div class="form-group"><label>Room Number</label><input type="text" id="roomNumber" required placeholder="101"></div>
+      <div class="form-group"><label>Type</label>
         <select id="roomType" required>
-          <option value="Single">Single</option>
-          <option value="Double">Double</option>
-          <option value="Suite">Suite</option>
-          <option value="Deluxe">Deluxe</option>
+          <option>Single</option><option>Double</option><option>Suite</option><option>Deluxe</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Price per Night ($)</label>
-        <input type="number" id="roomPrice" required min="1" placeholder="150">
-      </div>
-      <div style="display:flex; gap:1rem; margin-top:1.5rem;">
-        <button type="submit" class="btn btn-primary">Save Room</button>
-        <button type="button" class="btn btn-danger" onclick="closeModal('roomModal')">Cancel</button>
+      <div class="form-group"><label>Price/Night ($)</label><input type="number" id="roomPrice" required min="1"></div>
+      <div style="text-align:right;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('roomModal')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Booking Modal -->
-<div id="bookingModal" class="modal hidden">
+<div id="bookingModal" class="modal hidden" onclick="if(event.target===this) closeModal('bookingModal')">
   <div class="modal-content">
     <h3>New Booking</h3>
     <form id="bookingForm">
-      <div class="form-group">
-        <label>Guest Name</label>
-        <input type="text" id="guestName" required>
-      </div>
-      <div class="form-group">
-        <label>Phone</label>
-        <input type="text" id="guestPhone" required>
-      </div>
-      <div class="form-group">
-        <label>Email (optional)</label>
-        <input type="email" id="guestEmail">
-      </div>
-      <div class="form-group">
-        <label>Room</label>
-        <select id="bookingRoom" required></select>
-      </div>
-      <div class="form-group">
-        <label>Check In</label>
-        <input type="date" id="checkIn" required>
-      </div>
-      <div class="form-group">
-        <label>Check Out</label>
-        <input type="date" id="checkOut" required>
-      </div>
-      <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+      <div class="form-group"><label>Guest Name</label><input type="text" id="guestName" required></div>
+      <div class="form-group"><label>Phone</label><input type="text" id="guestPhone" required></div>
+      <div class="form-group"><label>Email (optional)</label><input type="email" id="guestEmail"></div>
+      <div class="form-group"><label>Room</label><select id="bookingRoom" required></select></div>
+      <div class="form-group"><label>Check-in</label><input type="date" id="checkIn" required></div>
+      <div class="form-group"><label>Check-out</label><input type="date" id="checkOut" required></div>
+      <div style="text-align:right;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('bookingModal')">Cancel</button>
         <button type="submit" class="btn btn-success">Create Booking</button>
-        <button type="button" class="btn btn-danger" onclick="closeModal('bookingModal')">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="walkinModal" class="modal hidden" onclick="if(event.target===this) closeModal('walkinModal')">
+  <div class="modal-content">
+    <h3>Guest Walk-in (Instant Check-in)</h3>
+    <form id="walkinForm">
+      <div class="form-group"><label>Guest Name</label><input type="text" id="guestWalkinName" required></div>
+      <div class="form-group"><label>Phone</label><input type="text" id="guestWalkinPhone" required></div>
+      <div class="form-group"><label>Assign Room</label><select id="walkinRoom" required></select></div>
+      <div style="text-align:right;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('walkinModal')">Cancel</button>
+        <button type="submit" class="btn btn-success">Check In Now</button>
       </div>
     </form>
   </div>
 </div>
 
 <script>
-// Local Storage
-const storage = {
-  get: (key) => JSON.parse(localStorage.getItem(key)) || [],
-  set: (key, value) => localStorage.setItem(key, JSON.stringify(value))
-};
+let rooms = JSON.parse(localStorage.getItem('rooms')) || [];
+let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+let counter = parseInt(localStorage.getItem('counter')) || 1001;
 
-let rooms = storage.get('rooms');
-let bookings = storage.get('bookings');
-let bookingIdCounter = parseInt(localStorage.getItem('bookingIdCounter')) || 1001;
-
-// Navigation
-document.querySelectorAll('nav a').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    link.classList.add('active');
-    document.querySelectorAll('#dashboard, #rooms, #bookings, #guests').forEach(sec => sec.classList.add('hidden'));
-    document.getElementById(link.dataset.page).classList.remove('hidden');
-    
-    if (link.dataset.page === 'dashboard') updateDashboard();
-    if (link.dataset.page === 'rooms') renderRooms();
-    if (link.dataset.page === 'bookings') renderBookings();
-    if (link.dataset.page === 'guests') renderGuests();
-  });
-});
-
-// Modal Controls
 function closeModal(id) {
   document.getElementById(id).classList.add('hidden');
   document.querySelectorAll('form').forEach(f => f.reset());
-  document.getElementById('roomId').value = '';
 }
-function openRoomModal(room = null) {
-  document.getElementById('roomModalTitle').textContent = room ? 'Edit Room' : 'Add New Room';
-  if (room) {
-    document.getElementById('roomId').value = room.number;
-    document.getElementById('roomNumber').value = room.number;
-    document.getElementById('roomType').value = room.type;
-    document.getElementById('roomPrice').value = room.price;
+
+// Navigation
+document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  document.querySelectorAll('nav a').forEach(x => x.classList.remove('active'));
+  a.classList.add('active');
+  document.querySelectorAll('#dashboard,#rooms,#bookings,#guests').forEach(s => s.classList.add('hidden'));
+  document.getElementById(a.dataset.page).classList.remove('hidden');
+  updateDashboard();
+  if (a.dataset.page === 'rooms') renderRooms();
+  if (a.dataset.page === 'bookings') renderBookings();
+  if (a.dataset.page === 'guests') renderGuests();   // Fixed here
+}));
+
+function openRoomModal(r = null) {
+  document.getElementById('roomTitle').textContent = r ? 'Edit Room' : 'Add New Room';
+  if (r) {
+    document.getElementById('roomId').value = r.number;
+    document.getElementById('roomNumber').value = r.number;
+    document.getElementById('roomType').value = r.type;
+    document.getElementById('roomPrice').value = r.price;
   }
   document.getElementById('roomModal').classList.remove('hidden');
 }
-function openBookingModal() {
-  populateRoomSelect();
-  document.getElementById('bookingModal').classList.remove('hidden');
-}
 
-// Close modal when clicking outside
-document.querySelectorAll('.modal').forEach(m => {
-  m.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal')) closeModal(e.target.id);
+function openBookingModal() { populateRooms('bookingRoom'); document.getElementById('bookingModal').classList.remove('hidden'); }
+function openWalkInModal() { populateRooms('walkinRoom'); document.getElementById('walkinModal').classList.remove('hidden'); }
+
+function populateRooms(id) {
+  const sel = document.getElementById(id);
+  sel.innerHTML = '<option value="">-- Select room --</option>';
+  const occupied = bookings.filter(b => b.status === 'Checked In').map(b => b.room);
+  rooms.filter(r => !occupied.includes(r.number)).forEach(r => {
+    sel.innerHTML += `<option value="${r.number}">Room ${r.number} (${r.type}) - $${r.price}/night</option>`;
   });
-});
-
-// Rooms
-function renderRooms() {
-  const tbody = document.querySelector('#roomsTable tbody');
-  tbody.innerHTML = '';
-  rooms.forEach(room => {
-    const occupied = bookings.some(b => b.room === room.number && b.status === 'Checked In');
-    const status = occupied ? 'Occupied' : 'Available';
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${room.number}</td>
-      <td>${room.type}</td>
-      <td>$${room.price}</td>
-      <td><span class="status status-${status.toLowerCase()}">${status}</span></td>
-      <td>
-        <button class="btn btn-warning btn-sm" onclick='openRoomModal(${JSON.stringify(room)})'>Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteRoom('${room.number}')">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-  updateDashboard();
 }
 
-function deleteRoom(number) {
-  if (confirm(`Delete room ${number}?`)) {
-    rooms = rooms.filter(r => r.number !== number);
-    storage.set('rooms', rooms);
-    renderRooms();
-  }
-}
-
-document.getElementById('roomForm').onsubmit = (e) => {
+// Save room
+document.getElementById('roomForm').onsubmit = e => {
   e.preventDefault();
-  const id = document.getElementById('roomId').value;
-  const room = {
-    number: document.getElementById('roomNumber').value.trim(),
-    type: document.getElementById('roomType').value,
-    price: document.getElementById('roomPrice').value
-  };
-  if (id) {
-    rooms = rooms.map(r => r.number === id ? room : r);
-  } else {
-    if (rooms.some(r => r.number === room.number)) {
-      alert('Room number already exists!');
-      return;
-    }
-    rooms.push(room);
-  }
-  storage.set('rooms', rooms);
+  const num = document.getElementById('roomNumber').value.trim();
+  const old = document.getElementById('roomId').value;
+  if (!old && rooms.some(r => r.number === num)) return alert('Room exists!');
+  const room = { number: num, type: document.getElementById('roomType').value, price: document.getElementById('roomPrice').value };
+  if (old) rooms = rooms.map(r => r.number === old ? room : r);
+  else rooms.push(room);
+  localStorage.setItem('rooms', JSON.stringify(rooms));
   closeModal('roomModal');
-  renderRooms();
+  renderRooms(); updateDashboard();
 };
 
-// Bookings
-function populateRoomSelect() {
-  const select = document.getElementById('bookingRoom');
-  select.innerHTML = '<option value="">-- Select Available Room --</option>';
-  const available = rooms.filter(r => !bookings.some(b => b.room === r.number && b.status === 'Checked In'));
-  available.forEach(room => {
-    const opt = new Option(`${room.number} (${room.type} - $${room.price}/night)`, room.number);
-    select.add(opt);
-  });
-}
-
-document.getElementById('bookingForm').onsubmit = (e) => {
+// Normal booking
+document.getElementById('bookingForm').onsubmit = e => {
   e.preventDefault();
   const today = new Date().toISOString().split('T')[0];
-  const checkIn = document.getElementById('checkIn').value;
-  
-  const booking = {
-    id: bookingIdCounter++,
-    guestName: document.getElementById('guestName').value.trim(),
-    guestPhone: document.getElementById('guestPhone').value.trim(),
-    guestEmail: document.getElementById('guestEmail').value.trim(),
+  const b = {
+    id: counter++,
+    guestName: document.getElementById('guestName').value,
+    guestPhone: document.getElementById('guestPhone').value,
+    guestEmail: document.getElementById('guestEmail').value,
     room: document.getElementById('bookingRoom').value,
-    checkIn,
+    checkIn: document.getElementById('checkIn').value,
     checkOut: document.getElementById('checkOut').value,
-    status: checkIn <= today ? 'Checked In' : 'Confirmed'
+    status: document.getElementById('checkIn').value <= today ? 'Checked In' : 'Confirmed'
   };
-  
-  bookings.push(booking);
-  storage.set('bookings', bookings);
-  localStorage.setItem('bookingIdCounter', bookingIdCounter);
+  bookings.push(b);
+  localStorage.setItem('bookings', JSON.stringify(bookings));
+  localStorage.setItem('counter', counter);
   closeModal('bookingModal');
-  renderBookings();
-  renderGuests();
+  renderBookings(); renderGuests(); updateDashboard();
 };
+
+// Walk-in
+document.getElementById('walkinForm').onsubmit = e => {
+  e.preventDefault();
+  const b = {
+    id: counter++,
+    guestName: document.getElementById('guestWalkinName').value,
+    guestPhone: document.getElementById('guestWalkinPhone').value,
+    guestEmail: '',
+    room: document.getElementById('walkinRoom').value,
+    checkIn: new Date().toISOString().split('T')[0],
+    checkOut: '',
+    status: 'Checked In'
+  };
+  bookings.push(b);
+  localStorage.setItem('bookings', JSON.stringify(bookings));
+  localStorage.setItem('counter', counter);
+  closeModal('walkinModal');
+  alert('Guest checked in!');
+  renderBookings(); renderGuests(); updateDashboard();
+};
+
+function renderRooms() {
+  const tbody = document.querySelector('#roomsTable tbody');
+  tbody.innerHTML = rooms.map(r => {
+    const occ = bookings.some(b => b.room === r.number && b.status === 'Checked In');
+    return `<tr><td>${r.number}</td><td>${r.type}</td><td>$${r.price}</td><td>${occ?'Occupied':'Available'}</td><td>
+      <button class="btn btn-warning btn-sm" onclick='openRoomModal(${JSON.stringify(r)})'>Edit</button>
+      <button class="btn btn-danger btn-sm" onclick="if(confirm('Delete?')){rooms=rooms.filter(x=>x.number!=='${r.number}');bookings=bookings.filter(x=>x.room!=='${r.number}');localStorage.setItem('rooms',JSON.stringify(rooms));localStorage.setItem('bookings',JSON.stringify(bookings));renderRooms();renderBookings();renderGuests();updateDashboard();}">Delete</button>
+    </td></tr>`;
+  }).join('');
+}
 
 function renderBookings() {
   const tbody = document.querySelector('#bookingsTable tbody');
-  tbody.innerHTML = '';
   const today = new Date().toISOString().split('T')[0];
-  
-  bookings.sort((a,b) => b.id - a.id);
-  
-  bookings.forEach(b => {
-    if (b.status === 'Confirmed' && b.checkIn <= today) b.status = 'Checked In';
-    
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>#${b.id}</td>
-      <td>${b.guestName}</td>
-      <td>${b.room}</td>
-      <td>${b.checkIn}</td>
-      <td>${b.checkOut}</td>
-      <td><span class="status status-${b.status.toLowerCase().replace(' ','-')}">${b.status}</span></td>
+  [...bookings].sort((a,b)=>b.id-a.id).forEach(b => {
+    if (b.status==='Confirmed' && b.checkIn<=today) { b.status='Checked In'; localStorage.setItem('bookings',JSON.stringify(bookings)); }
+  });
+  tbody.innerHTML = bookings.map(b => `
+    <tr>
+      <td>#${b.id}</td><td>${b.guestName}</td><td>${b.room}</td><td>${b.checkIn}</td><td>${b.checkOut||'-'}</td>
+      <td>${b.status}</td>
       <td>
-        ${b.status === 'Confirmed' ? `<button class="btn btn-primary btn-sm" onclick="checkIn(${b.id})">Check In</button>` : ''}
-        ${b.status === 'Checked In' ? `<button class="btn btn-success btn-sm" onclick="checkOut(${b.id})">Check Out</button>` : ''}
+        ${b.status==='Confirmed' ? `<button class="btn btn-primary btn-sm" onclick="b.status='Checked In';localStorage.setItem('bookings',JSON.stringify(bookings));renderBookings();renderGuests();updateDashboard();">Check In</button>` : ''}
+        ${b.status==='Checked In' ? `<button class="btn btn-success btn-sm" onclick="if(confirm('Check out?')){b.status='Checked Out';localStorage.setItem('bookings',JSON.stringify(bookings));renderBookings();renderGuests();updateDashboard();}">Check Out</button>` : ''}
       </td>
-    `;
-    tbody.appendChild(tr);
-  });
-  updateDashboard();
+    </tr>`).join('');
 }
 
-function checkIn(id) {
-  bookings = bookings.map(b => b.id === id ? {...b, status: 'Checked In'} : b);
-  storage.set('bookings', bookings);
-  renderBookings();
-  renderGuests();
-}
-
-function checkOut(id) {
-  if (confirm('Confirm check-out?')) {
-    bookings = bookings.map(b => b.id === id ? {...b, status: 'Checked Out'} : b);
-    storage.set('bookings', bookings);
-    renderBookings();
-    renderGuests();
-  }
-}
-
-document.getElementById('searchBooking').onkeyup = () => {
-  const term = document.getElementById('searchBooking').value.toLowerCase();
-  document.querySelectorAll('#bookingsTable tbody tr').forEach(row => {
-    row.style.display = row.textContent.toLowerCase().includes(term) ? '' : 'none';
-  });
-};
-
-// Guests
+// FIXED Current Guests Table
 function renderGuests() {
   const tbody = document.querySelector('#guestsTable tbody');
-  tbody.innerHTML = '';
-  bookings.filter(b => b.status === 'Checked In').forEach(b => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${b.guestName}</td>
-      <td>${b.guestPhone}</td>
-      <td>${b.guestEmail || '-'}</td>
-      <td>${b.room}</td>
-      <td>${b.checkIn}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+  tbody.innerHTML = '';   // Clear first
+  bookings
+    .filter(b => b.status === 'Checked In')
+    .forEach(b => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${b.guestName}</strong></td>
+        <td>${b.guestPhone}</td>
+        <td>${b.guestEmail || '-'}</td>
+        <td>Room ${b.room}</td>
+        <td>${b.checkIn}</td>
+      `;
+      tbody.appendChild(tr);
+    });
 }
 
-// Dashboard
 function updateDashboard() {
-  const total = rooms.length;
   const occupied = bookings.filter(b => b.status === 'Checked In').length;
-  const available = total - occupied;
   const today = new Date().toISOString().split('T')[0];
-  const todayCheckins = bookings.filter(b => b.checkIn === today).length;
-
-  document.getElementById('totalRooms').textContent = total;
-  document.getElementById('availableRooms').textContent = available;
+  document.getElementById('totalRooms').textContent = rooms.length;
+  document.getElementById('availableRooms').textContent = rooms.length - occupied;
   document.getElementById('occupiedRooms').textContent = occupied;
-  document.getElementById('todayBookings').textContent = todayCheckins;
+  document.getElementById('todayBookings').textContent = bookings.filter(b => b.checkIn === today).length;
 }
 
-// Init
+// Start
 updateDashboard();
 renderRooms();
 renderBookings();
 renderGuests();
-
 </script>
 </body>
 </html>
